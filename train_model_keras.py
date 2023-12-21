@@ -47,18 +47,18 @@ dir_prefix, model_path, LEVEL, batch_size, train_size, learning_rate, restore_it
 batch_size = 20
 print("BATCH SIZE", batch_size)
 
-gpus = tf.config.list_physical_devices('GPU')
-if gpus:
-  # Restrict TensorFlow to only allocate 1GB of memory on the first GPU
-  try:
-    tf.config.set_logical_device_configuration(
-        gpus[0],
-        [tf.config.LogicalDeviceConfiguration(memory_limit=15000)])
-    logical_gpus = tf.config.list_logical_devices('GPU')
-    print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-  except RuntimeError as e:
-    # Virtual devices must be set before GPUs have been initialized
-    print(e)
+# gpus = tf.config.list_physical_devices('GPU')
+# if gpus:
+#   # Restrict TensorFlow to only allocate 1GB of memory on the first GPU
+#   try:
+#     tf.config.set_logical_device_configuration(
+#         gpus[0],
+#         [tf.config.LogicalDeviceConfiguration(memory_limit=15000)])
+#     logical_gpus = tf.config.list_logical_devices('GPU')
+#     print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+#   except RuntimeError as e:
+#     # Virtual devices must be set before GPUs have been initialized
+#     print(e)
 
 test_batch_size = 1
 
@@ -124,7 +124,7 @@ with tf.compat.v1.Session() as sess:
     print("Initializing variables")
 
     model = tf.keras.Model(inputs=phone_, outputs=enhanced)
-    print(model.summary())
+    # print(model.summary())
 
     def log10(x):
         numerator = tf.math.log(x)
@@ -331,7 +331,7 @@ with tf.compat.v1.Session() as sess:
             print("Test PSNR:", evaluation[1])
             print("Test SSIM:", evaluation[2])
 
-            with open('models/test_info.csv', 'a+') as file:
+            with open(dir_prefix + 'models/test_info.txt', 'a+') as file:
                 # Add information to the file epoch;loss;loss_psnr;loss_ssim
                 file.write(f"{epoch};{test_loss};{test_psnr};{test_ssim}")
 
