@@ -195,7 +195,7 @@ with tf.compat.v1.Session() as sess:
     }[loss_fn]
 
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+        optimizer=tf.keras.optimizers.legacy.Adam(learning_rate=learning_rate),
         loss=loss_fn,
         metrics=[loss_psnr, loss_ssim],
     )
