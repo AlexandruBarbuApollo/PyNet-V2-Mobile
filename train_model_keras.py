@@ -38,7 +38,7 @@ from load_dataset import load_train_patch, load_val_data, load_real_test_data
 from tensorflow.keras.callbacks import Callback
 import utils
 import vgg
-
+import gc
 
 # Processing command arguments
 dir_prefix, model_path, LEVEL, batch_size, train_size, learning_rate, restore_iter, num_train_iters, dataset_dir, vgg_dir, loss_fn = \
@@ -334,6 +334,8 @@ with tf.compat.v1.Session() as sess:
             with open(dir_prefix + 'models/test_info.txt', 'a+') as file:
                 # Add information to the file epoch;loss;loss_psnr;loss_ssim
                 file.write(f"{epoch};{test_loss};{test_psnr};{test_ssim}")
+
+            gc.collect()
 
     real_test_data, real_test_answ = load_real_test_data(dataset_dir, dslr_dir, phone_dir, PATCH_WIDTH, PATCH_HEIGHT, DSLR_SCALE)
     test_eval = TestEvaluationCallback(real_test_data, real_test_answ)
