@@ -226,7 +226,7 @@ with tf.compat.v1.Session() as sess:
 
     prev_level = (LEVEL+1)
     if restore_iter != 0:
-        prev_model = load_model(dir_prefix + "models/model.{0}.{1}.h5".format(prev_level, restore_iter), compile=False)
+        prev_model = load_model(dir_prefix + "models/model.{0}.0{1}.h5".format(prev_level, restore_iter), compile=False)
         for i, layer in enumerate(prev_model.layers):
             try:
                 if model.layers[i].trainable and model.layers[i].name == layer.name:
